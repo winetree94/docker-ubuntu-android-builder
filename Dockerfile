@@ -22,12 +22,28 @@ RUN unzip *tools*linux*.zip
 RUN rm *tools*linux*.zip
 RUN ls
 
+# Prepare to install gradle
+ARG GRADLE_VERSION=5.5.1
+ENV GRADLE_HOME="/opt/gradle"
+RUN mkdir -p ${GRADLE_HOME}
+WORKDIR ${GRADLE_HOME}
+
+# Install gradle
+RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
+RUN unzip *.zip
+RUN rm *.zip
+RUN ls
+
 # Set environment variables
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools/bin
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools/bin:${GRADLE_HOME}/gradle-${GRADLE_VERSION}/bin
 
 # Initialize android sdk
 RUN mkdir -p ${HOME}/.android/
 RUN touch ${HOME}/.android/repositories.cfg
 RUN yes | sdkmanager --licenses
 RUN sdkmanager --update
+
+# Initialize workspace
+RUN mkdir -p /workspace
+WORKDIR /workspace
