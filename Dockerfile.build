@@ -1,0 +1,7 @@
+FROM winetre94/test
+
+RUN mkdir -p /workspace
+COPY . /workspace
+
+WORKDIR /workspace
+RUN ./gradlew assembleRelease
