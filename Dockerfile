@@ -1,42 +1,33 @@
+# Base Image Configuration
 FROM ubuntu:18.04
-MAINTAINER winetree@outlook.com
+MAINTAINER winetree94@outlook.com
 
 USER root
-RUN apt-get update
-RUN apt-get upgrade -y
 
-RUN apt-get install -y curl unzip openjdk-8-jdk build-essential file apt-utils
+# Install requirement software
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends wget && \
+    apt-get install -y --no-install-recommends openjdk-8-jdk && \
+    apt-get install -y --no-install-recommends unzip
 
-ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" \
-    ANDROID_HOME="/usr/local/android-sdk"
+# Prepare to install android sdk
+ARG ANDROID_SDK_VERSION=4333796
+ENV ANDROID_HOME="/usr/local/android-sdk"
+RUN mkdir -p ${ANDROID_HOME}
+WORKDIR ${ANDROID_HOME}
 
-# Download Android SDK
+# Install android sdk
+RUN wget -q "https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_VERSION}.zip"
+RUN unzip *tools*linux*.zip
+RUN rm *tools*linux*.zip
+RUN ls
 
-RUN mkdir "$ANDROID_HOME" .android \
-    && cd "$ANDROID_HOME" \
-    && curl -o sdk.zip $SDK_URL \
-    && unzip sdk.zip \
-    && rm sdk.zip \
-    && mkdir "$ANDROID_HOME/licenses" || true \
-    && echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license" \
-    && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+# Set environment variables
+ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools/bin
 
-# Install Android Build Tool and Libraries
-
-RUN $ANDROID_HOME/tools/bin/sdkmanager --update
-
-# RUN $ANDROID_HOME/tools/bin/sdkmanager \
-#     "build-tools;29.0.0" \
-#     "build-tools;28.0.3" \
-#     "build-tools;28.0.2" \
-#     "build-tools;27.0.3" \
-#     "build-tools;27.0.2" \
-#     "build-tools;27.0.1" \
-#     "build-tools;26.0.2" \
-#     "platforms;android-23" \
-#     "platforms;android-24" \
-#     "platforms;android-25" \
-#     "platforms;android-26" \
-#     "platforms;android-27" \
-#     "platforms;android-28" \
-#     "platform-tools"
+# Initialize android sdk
+RUN mkdir -p ${HOME}/.android/
+RUN touch ${HOME}/.android/repositories.cfg
+RUN yes | sdkmanager --licenses
+RUN sdkmanager --update
