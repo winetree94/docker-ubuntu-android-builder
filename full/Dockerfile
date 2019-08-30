@@ -1,4 +1,4 @@
-FROM winetree94/ubuntu-android-builder:base
+FROM winetree94/ubuntu-android-builder:latest
 MAINTAINER winetree94@outlook.com
 
 RUN $ANDROID_HOME/tools/bin/sdkmanager \
