@@ -2,7 +2,7 @@
 id="winetree94"
 repository="ubuntu-android-builder"
 
-docker build -t "${id}/${repository}:latest" . --rm -q
+docker build -t "${id}/${repository}" . --rm -q
 
 for directory in */; do
   tag="${directory%/}"
