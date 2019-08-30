@@ -5,8 +5,7 @@ services:
 sudo: true
 
 before_install:
-  - ls
-  - sudo ./build.sh
+  - "sudo ./build.sh"
 
 script:
-  - sudo ./deploy.sh
+  - "sudo ./deploy.sh"
