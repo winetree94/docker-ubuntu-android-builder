@@ -1,11 +1,10 @@
-language: ruby
+sudo: 'required'
 
 services:
   - docker
-sudo: true
 
 before_install:
-  - "sudo ./build.sh"
+  - './build.sh'
 
 script:
-  - "sudo ./deploy.sh"
+  - './deploy.sh'
