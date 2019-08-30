@@ -2,9 +2,10 @@ language: ruby
 
 services:
   - docker
+sudo: true
 
 before_install:
-  - ./build.sh
+  - sudo ./build.sh
 
 script:
-  - ./deploy.sh
+  - sudo ./deploy.sh
