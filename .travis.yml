@@ -8,6 +8,4 @@ before_install:
 
 script:
   - 'sudo bash ./build.sh'
-
-deploy:
   - 'sudo bash ./deploy.sh'
