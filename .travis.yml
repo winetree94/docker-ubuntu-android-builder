@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - './build.sh'
+  - 'sudo bash ./build.sh'
 
 script:
-  - './deploy.sh'
+  - 'sudo bash ./deploy.sh'
