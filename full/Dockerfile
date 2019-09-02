@@ -1,7 +1,8 @@
 FROM winetree94/ubuntu-android-builder:latest
-MAINTAINER winetree94@outlook.com
+LABEL maintainer=winetree94@outlook.com
 
 RUN $ANDROID_HOME/tools/bin/sdkmanager \
+    "build-tools;29.0.2" \
     "build-tools;29.0.0" \
     "build-tools;28.0.3" \
     "build-tools;28.0.2" \

@@ -1,6 +1,6 @@
 # Base Image Configuration
 FROM ubuntu:18.04
-MAINTAINER winetree94@outlook.com
+LABEL maintainer=winetree94@outlook.com
 
 USER root
 
@@ -23,7 +23,7 @@ RUN rm *tools*linux*.zip
 RUN ls
 
 # Prepare to install gradle
-ARG GRADLE_VERSION=5.5.1
+ARG GRADLE_VERSION=5.6.1
 ENV GRADLE_HOME="/opt/gradle"
 RUN mkdir -p ${GRADLE_HOME}
 WORKDIR ${GRADLE_HOME}
