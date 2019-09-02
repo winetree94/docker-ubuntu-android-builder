@@ -1,7 +1,9 @@
 # Docker Ubuntu Android Builder Image
 
-1. Usages 
+1. Basic Usages
 
-```sh
-docker run -it --rm -v ${PWD}:/workspace winetree94/ubuntu-android-builder:minimal gradle assembleRelease
+```bash
+docker run -it --rm ${PROJECT_DIR}:/workspace winetree94/ubuntu-android-builder:minimal bash -c "gradle YOUR_COMMAND"
 ```
+
+2. With Gradle Google Play Publisher
